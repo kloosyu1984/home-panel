@@ -12,36 +12,36 @@
 :root{--bg:#0b0f14;--card:#141a22;--card2:#0f141b;--line:#263040;--fg:#eef2f6;--mute:#8a96a6;--ok:#3fd08a;--acc:#6cb6ff;--bad:#ff6b6b}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-system,"PingFang HK","PingFang TC","Noto Sans TC","Helvetica Neue",sans-serif;-webkit-user-select:none;user-select:none;overflow:hidden;-webkit-text-size-adjust:100%}
-#app{height:100%;display:grid;grid-template-columns:34fr 66fr;gap:1.6vmin;padding:max(2vmin,env(safe-area-inset-top)) max(2vmin,env(safe-area-inset-right)) max(1.6vmin,env(safe-area-inset-bottom)) max(2vmin,env(safe-area-inset-left))}
+#app{height:100%;display:grid;grid-template-columns:1fr 1fr;gap:1.6vmin;padding:max(2vmin,env(safe-area-inset-top)) max(2vmin,env(safe-area-inset-right)) max(1.6vmin,env(safe-area-inset-bottom)) max(2vmin,env(safe-area-inset-left))}
 .col{display:flex;flex-direction:column;gap:1.6vmin;min-height:0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:2.2vmin;padding:2.2vmin;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .h{font-size:2vmin;color:var(--mute);letter-spacing:.08em;margin-bottom:1.2vmin;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase}
 /* clock */
 #clockCard{position:relative}
-#clock{font-size:15vmin;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:.95}
-#clock .sec{font-size:5vmin;color:var(--mute);font-weight:500;margin-left:1vmin;letter-spacing:0}
-#date{font-size:3.2vmin;color:#c3ccd7;margin-top:1.2vmin}
+#clock{font-size:17.5vmin;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:.95}
+#clock .sec{font-size:6vmin;color:var(--mute);font-weight:500;margin-left:1vmin;letter-spacing:0}
+#date{font-size:3.6vmin;color:#c3ccd7;margin-top:.8vmin}
 .gear{position:absolute;top:1.4vmin;right:1.4vmin;font-size:4vmin;line-height:1;background:none;border:0;color:var(--mute);padding:1vmin;cursor:pointer}
 /* weather */
 #wxCard{flex:1}
 .now{display:flex;align-items:center;gap:2vmin}
-.temp{font-size:12vmin;font-weight:300;line-height:1;font-variant-numeric:tabular-nums}
-.temp sup{font-size:4.5vmin;vertical-align:top;margin-left:.4vmin}
-.wxi{width:11vmin;height:11vmin;object-fit:contain}
-.meta{font-size:2.4vmin;color:var(--mute);line-height:1.55;white-space:nowrap}
+.temp{font-size:14vmin;font-weight:300;line-height:1;font-variant-numeric:tabular-nums}
+.temp sup{font-size:5vmin;vertical-align:top;margin-left:.4vmin}
+.wxi{width:12vmin;height:12vmin;object-fit:contain}
+.meta{font-size:2.8vmin;color:var(--mute);line-height:1.55;white-space:nowrap}
 .meta b{color:var(--fg);font-weight:600}
-.desc{font-size:2.1vmin;line-height:1.45;margin:1.2vmin 0;color:#c9d2dc;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.desc{font-size:2.3vmin;line-height:1.4;margin:1vmin 0;color:#c9d2dc;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 /* 7-day forecast: compact rows that share the remaining height */
 .fc{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:var(--card2);border-radius:1.4vmin;padding:.2vmin 1.4vmin}
-.fr{display:grid;grid-template-columns:6.5vmin 4.4vmin 1fr auto;column-gap:1.2vmin;align-items:center;padding:.3vmin 0;border-top:1px solid var(--line)}
+.fr{display:grid;grid-template-columns:11.5vmin 4.6vmin 1fr auto;column-gap:1.2vmin;align-items:center;padding:.2vmin 0;border-top:1px solid var(--line)}
 .fr:first-child{border-top:0}
-.fday{font-size:2vmin;font-weight:600;line-height:1.15}
-.fday small{display:block;font-size:1.5vmin;color:var(--mute);font-weight:400}
-.fr img{width:4.4vmin;height:4.4vmin;object-fit:contain}
-.ftxt{font-size:1.6vmin;line-height:1.25;color:#b9c3cf;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.ftmp{text-align:right;font-size:2.1vmin;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.15}
+.fday{font-size:2.3vmin;font-weight:600;line-height:1.15}
+.fday small{display:inline;margin-left:.6vmin;font-size:1.7vmin;color:var(--mute);font-weight:400}
+.fr img{width:4.6vmin;height:4.6vmin;object-fit:contain}
+.ftxt{font-size:1.9vmin;line-height:1.25;color:#b9c3cf;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.ftmp{text-align:right;font-size:2.5vmin;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.15}
 .ftmp span{color:var(--mute)}
-.psr{display:inline-block;font-size:1.4vmin;border-radius:.8vmin;padding:0 .7vmin;margin-top:.2vmin;background:#1e2733;color:#9fb0c3}
+.psr{display:inline-block;font-size:1.6vmin;border-radius:.8vmin;padding:0 .7vmin;margin-left:1vmin;vertical-align:middle;min-width:9vmin;text-align:center;background:#1e2733;color:#9fb0c3}
 .psr.p2{background:#1b3350;color:#9cc8ff}.psr.p3{background:#1d4b7a;color:#cfe5ff}.psr.p4{background:#2463a8;color:#fff}.psr.p5{background:#2f7de1;color:#fff}
 /* warnings */
 #warn{display:flex;flex-wrap:wrap;gap:1.2vmin}
@@ -59,14 +59,14 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 #bus{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
 .stopname{font-size:2.4vmin;font-weight:600;color:var(--acc);margin:1.4vmin 0 .4vmin}
 .stopname:first-child{margin-top:0}
-.row{display:grid;grid-template-columns:14vmin 1fr auto;align-items:center;gap:1.8vmin;padding:1.2vmin 0;border-top:1px solid var(--line)}
-.rt{font-size:6vmin;font-weight:800;line-height:1;letter-spacing:-.02em}
-.dest{font-size:2.8vmin;line-height:1.25;min-width:0}
+.row{display:grid;grid-template-columns:10vmin 1fr auto;align-items:center;gap:1.8vmin;padding:1.2vmin 0;border-top:1px solid var(--line)}
+.rt{font-size:5.6vmin;font-weight:800;line-height:1;letter-spacing:-.02em}
+.dest{font-size:2.6vmin;line-height:1.25;min-width:0}
 .dest small{display:block;color:var(--mute);font-size:1.9vmin;margin-top:.3vmin}
-.etas{display:flex;gap:2.6vmin;align-items:baseline;justify-content:flex-end}
-.eta{font-size:5.4vmin;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;text-align:right;min-width:9vmin}
+.etas{display:flex;gap:1.8vmin;align-items:baseline;justify-content:flex-end}
+.eta{font-size:5vmin;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;text-align:right;min-width:9vmin}
 .eta small{font-size:2vmin;font-weight:500;color:var(--mute);margin-left:.4vmin}
-.eta.l{font-size:3.4vmin;color:#aab4c0;font-weight:600;min-width:7vmin}
+.eta.l{font-size:3.1vmin;color:#aab4c0;font-weight:600;min-width:6vmin}
 .eta.l small{font-size:1.7vmin}
 .eta.arr{color:var(--ok);font-size:3.6vmin}
 .eta.sch{opacity:.75}
@@ -349,7 +349,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
         return '<div class="fr"><div class="fday">' + esc(wk) + '<small>' + esc(day) + '</small></div>' + img(f.ForecastIcon, '') +
           '<div class="ftxt">' + esc(f.forecastWeather || '') + '</div>' +
           '<div class="ftmp">' + esc(f.forecastMaxtemp && f.forecastMaxtemp.value) + '° <span>' + esc(f.forecastMintemp && f.forecastMintemp.value) + '°</span>' +
-          (psr ? '<br><span class="psr p' + lvl + '">' + esc(t('rain')) + ' ' + esc(psr) + '</span>' : '') + '</div></div>';
+          (psr ? '<span class="psr p' + lvl + '">' + esc(t('rain')) + ' ' + esc(psr) + '</span>' : '') + '</div></div>';
       }).join('') + '</div>';
     }
     $('wx').innerHTML = h || '<div class="none">' + esc(t('loading')) + '</div>';
