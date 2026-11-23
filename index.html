@@ -20,15 +20,17 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 /* clock */
 #clockCard{position:relative}
 #clock{font-size:calc(17.5*var(--u));font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:.95}
-#clock .sec{font-size:calc(6*var(--u));color:var(--mute);font-weight:500;margin-left:calc(1*var(--u));letter-spacing:0}
+#clock .side{display:inline-flex;flex-direction:column;justify-content:space-between;vertical-align:top;margin-left:calc(1.2*var(--u));height:calc(15*var(--u));letter-spacing:0}
+#clock .ap{font-size:calc(4.2*var(--u));color:#c3ccd7;font-weight:600;line-height:1.1;padding-top:calc(1.2*var(--u))}
+#clock .sec{font-size:calc(6*var(--u));color:var(--mute);font-weight:500;line-height:1}
 #date{font-size:calc(3.6*var(--u));color:#c3ccd7;margin-top:calc(.8*var(--u))}
 .gear{position:absolute;top:calc(1.4*var(--u));right:calc(1.4*var(--u));font-size:calc(4*var(--u));line-height:1;background:none;border:0;color:var(--mute);padding:calc(1*var(--u));cursor:pointer}
 /* weather */
 #wxCard{flex:1}
 .now{display:flex;align-items:center;gap:calc(2*var(--u))}
-.temp{font-size:calc(14*var(--u));font-weight:300;line-height:1;font-variant-numeric:tabular-nums}
-.temp sup{font-size:calc(5*var(--u));vertical-align:top;margin-left:calc(.4*var(--u))}
-.wxi{width:calc(12*var(--u));height:calc(12*var(--u));object-fit:contain}
+.temp{font-size:calc(16.8*var(--u));font-weight:300;line-height:1;font-variant-numeric:tabular-nums}
+.temp sup{font-size:calc(6*var(--u));vertical-align:top;margin-left:calc(.4*var(--u))}
+.wxi{width:calc(14.4*var(--u));height:calc(14.4*var(--u));object-fit:contain}
 .meta{font-size:calc(2.8*var(--u));color:var(--mute);line-height:1.55;white-space:nowrap}
 .meta b{color:var(--fg);font-weight:600}
 .desc{font-size:calc(2.3*var(--u));line-height:1.4;margin:calc(1*var(--u)) 0;color:#c9d2dc;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -61,16 +63,16 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 #bus{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
 .stopname{font-size:calc(2.4*var(--u));font-weight:600;color:var(--acc);margin:calc(1.4*var(--u)) 0 calc(.4*var(--u))}
 .stopname:first-child{margin-top:0}
-.row{display:grid;grid-template-columns:calc(10*var(--u)) 1fr auto;align-items:center;gap:calc(1.8*var(--u));padding:calc(1.2*var(--u)) 0;border-top:1px solid var(--line)}
-.rt{font-size:calc(5.6*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em}
+.row{display:grid;grid-template-columns:calc(12*var(--u)) 1fr auto;align-items:center;gap:calc(1.8*var(--u));padding:calc(1.2*var(--u)) 0;border-top:1px solid var(--line)}
+.rt{font-size:calc(6.7*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em}
 .dest{font-size:calc(2.6*var(--u));line-height:1.25;min-width:0}
 .dest small{display:block;color:var(--mute);font-size:calc(1.9*var(--u));margin-top:calc(.3*var(--u))}
 .etas{display:flex;gap:calc(1.8*var(--u));align-items:baseline;justify-content:flex-end}
-.eta{font-size:calc(5*var(--u));font-weight:700;font-variant-numeric:tabular-nums;line-height:1;text-align:right;min-width:calc(9*var(--u))}
-.eta small{font-size:calc(2*var(--u));font-weight:500;color:var(--mute);margin-left:calc(.4*var(--u))}
-.eta.l{font-size:calc(3.1*var(--u));color:#aab4c0;font-weight:600;min-width:calc(6*var(--u))}
-.eta.l small{font-size:calc(1.7*var(--u))}
-.eta.arr{color:var(--ok);font-size:calc(3.6*var(--u))}
+.eta{font-size:calc(6*var(--u));font-weight:700;font-variant-numeric:tabular-nums;line-height:1;text-align:right;min-width:calc(10*var(--u))}
+.eta small{font-size:calc(2.4*var(--u));font-weight:500;color:var(--mute);margin-left:calc(.4*var(--u))}
+.eta.l{font-size:calc(3.7*var(--u));color:#aab4c0;font-weight:600;min-width:calc(7*var(--u))}
+.eta.l small{font-size:calc(2*var(--u))}
+.eta.arr{color:var(--ok);font-size:calc(4.3*var(--u))}
 .eta.sch{opacity:.75}
 .none{font-size:calc(2.4*var(--u));color:var(--mute)}
 .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(2*var(--u));color:var(--mute);font-size:calc(3*var(--u));text-align:center}
@@ -162,7 +164,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       routes: '顯示路線(全部不選 = 顯示全部)', station: '氣溫地點', dim: '夜間調暗(23:00–07:00)', done: '完成',
       loading: '載入中…', locErr: '未能取得位置,請改用搜尋', none: '找不到車站', link: '此面板的連結(完成設定後才「加入主畫面」)',
       m: '米', copy: '複製連結', copied: '已複製', sched: '原定班次', wxErr: '天氣資料', busErr: '巴士資料', warnErr: '警告資料',
-      hko: '香港天文台', rain: '降雨', today: '今日', labelPh: '顯示名稱(可選),例如:家門口 / 對面', addedMsg: '已加入 ✓ 如要加對面車站,可在下面再選一個。', busy: '九巴伺服器繁忙,請等一兩分鐘再試', routesNote: '只列出現時有班次的路線;夜間未開出的路線可能未有顯示。' },
+      hko: '香港天文台', rain: '降雨', am: '上午', pm: '下午', today: '今日', labelPh: '顯示名稱(可選),例如:家門口 / 對面', addedMsg: '已加入 ✓ 如要加對面車站,可在下面再選一個。', busy: '九巴伺服器繁忙,請等一兩分鐘再試', routesNote: '只列出現時有班次的路線;夜間未開出的路線可能未有顯示。' },
     en: { weather: 'Weather', warn: 'Weather warnings', bus: 'KMB arrivals', noWarn: 'No weather warnings in force', issued: 'issued',
       min: 'min', arriving: 'Arriving', humidity: 'Humidity', uv: 'UV', noStop: 'No bus stop set yet', setup: 'Set up bus stop',
       noEta: 'No ETA available', updated: 'Updated', offline: 'Offline', to: 'To', settings: 'Settings', lang: 'Language', stops: 'Bus stops',
@@ -170,7 +172,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       routes: 'Routes to show (none ticked = all)', station: 'Temperature station', dim: 'Dim at night (23:00–07:00)', done: 'Done',
       loading: 'Loading…', locErr: 'Could not get your location — try search instead', none: 'No stops found', link: 'Link to this panel (finish setup before “Add to Home Screen”)',
       m: 'm', copy: 'Copy link', copied: 'Copied', sched: 'Scheduled', wxErr: 'weather', busErr: 'bus', warnErr: 'warnings',
-      hko: 'Hong Kong Observatory', rain: 'Rain', today: 'Today', labelPh: 'Display name (optional), e.g. Outside home / Opposite', addedMsg: 'Added ✓ To add the stop across the road, pick another below.', busy: 'KMB server is busy — wait a minute or two and try again', routesNote: 'Only routes running now are listed; night-time gaps may hide some.' }
+      hko: 'Hong Kong Observatory', rain: 'Rain', am: 'AM', pm: 'PM', today: 'Today', labelPh: 'Display name (optional), e.g. Outside home / Opposite', addedMsg: 'Added ✓ To add the stop across the road, pick another below.', busy: 'KMB server is busy — wait a minute or two and try again', routesNote: 'Only routes running now are listed; night-time gaps may hide some.' }
   };
 
   // Badge styles for warning codes (labels are ours; full names come from HKO)
@@ -250,7 +252,8 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
   function tick() {
     var n = new Date();
     var parts = hkTime(n, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).split(':');
-    $('clock').innerHTML = esc(parts[0] + ':' + parts[1]) + '<span class="sec">' + esc(parts[2] || '') + '</span>';
+    var h24 = parseInt(parts[0], 10) % 24, h12 = h24 % 12 || 12;
+    $('clock').innerHTML = esc(h12 + ':' + parts[1]) + '<span class="side"><span class="ap">' + esc(t(h24 < 12 ? 'am' : 'pm')) + '</span><span class="sec">' + esc(parts[2] || '') + '</span></span>';
     $('date').textContent = isEn()
       ? hkTime(n, { weekday: 'long', day: 'numeric', month: 'long' })
       : hkTime(n, { month: 'long', day: 'numeric' }) + ' ' + hkTime(n, { weekday: 'long' });
