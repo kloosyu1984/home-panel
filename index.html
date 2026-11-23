@@ -34,15 +34,16 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 .desc{font-size:calc(2.3*var(--u));line-height:1.4;margin:calc(1*var(--u)) 0;color:#c9d2dc;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 /* 7-day forecast: compact rows that share the remaining height */
 .fc{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:var(--card2);border-radius:calc(1.4*var(--u));padding:calc(.2*var(--u)) calc(1.4*var(--u))}
-.fr{display:grid;grid-template-columns:calc(11.5*var(--u)) calc(4.6*var(--u)) 1fr auto;column-gap:calc(1.2*var(--u));align-items:center;padding:calc(.2*var(--u)) 0;border-top:1px solid var(--line)}
+.fr{display:grid;grid-template-columns:calc(6.5*var(--u)) calc(4.6*var(--u)) 1fr auto auto;column-gap:calc(1.2*var(--u));align-items:center;padding:calc(.2*var(--u)) 0;border-top:1px solid var(--line)}
 .fr:first-child{border-top:0}
 .fday{font-size:calc(2.3*var(--u));font-weight:600;line-height:1.15}
-.fday small{display:inline;margin-left:calc(.6*var(--u));font-size:calc(1.7*var(--u));color:var(--mute);font-weight:400}
+.fday small{display:block;font-size:calc(1.7*var(--u));color:var(--mute);font-weight:400}
 .fr img{width:calc(4.6*var(--u));height:calc(4.6*var(--u));object-fit:contain}
-.ftxt{font-size:calc(1.9*var(--u));line-height:1.25;color:#b9c3cf;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
-.ftmp{text-align:right;font-size:calc(2.5*var(--u));font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.15}
+.ftxt{font-size:calc(1.9*var(--u));line-height:1.25;color:#b9c3cf;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ftmp{text-align:right;font-size:calc(2.3*var(--u));font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.1}
+.ftmp span{display:block}
 .ftmp span{color:var(--mute)}
-.psr{display:inline-block;font-size:calc(1.6*var(--u));border-radius:calc(.8*var(--u));padding:0 calc(.7*var(--u));margin-left:calc(1*var(--u));vertical-align:middle;min-width:calc(9*var(--u));text-align:center;background:#1e2733;color:#9fb0c3}
+.psr{display:inline-block;font-size:calc(1.6*var(--u));border-radius:calc(.8*var(--u));padding:0 calc(.7*var(--u));margin-left:0;vertical-align:middle;min-width:calc(8.5*var(--u));text-align:center;background:#1e2733;color:#9fb0c3}
 .psr.p2{background:#1b3350;color:#9cc8ff}.psr.p3{background:#1d4b7a;color:#cfe5ff}.psr.p4{background:#2463a8;color:#fff}.psr.p5{background:#2f7de1;color:#fff}
 /* warnings */
 #warn{display:flex;flex-wrap:wrap;gap:calc(1.2*var(--u))}
@@ -121,7 +122,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       <div id="date"></div>
     </div>
     <div class="card" id="wxCard">
-      <div class="h"><span id="hWx">天氣</span><span id="wxPlace"></span></div>
+      <div class="h" style="display:none"><span id="hWx">天氣</span><span id="wxPlace"></span></div>
       <div id="wx"><div class="none">…</div></div>
     </div>
   </div>
@@ -349,8 +350,8 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
         var psr = String(f.PSR || ''), lvl = /中高|Medium High/i.test(psr) ? 4 : /高|High/i.test(psr) ? 5 : /中低|Medium Low/i.test(psr) ? 2 : /中|Medium/i.test(psr) ? 3 : 1;
         return '<div class="fr"><div class="fday">' + esc(wk) + '<small>' + esc(day) + '</small></div>' + img(f.ForecastIcon, '') +
           '<div class="ftxt">' + esc(f.forecastWeather || '') + '</div>' +
-          '<div class="ftmp">' + esc(f.forecastMaxtemp && f.forecastMaxtemp.value) + '° <span>' + esc(f.forecastMintemp && f.forecastMintemp.value) + '°</span>' +
-          (psr ? '<span class="psr p' + lvl + '">' + esc(t('rain')) + ' ' + esc(psr) + '</span>' : '') + '</div></div>';
+          '<div class="ftmp">' + esc(f.forecastMaxtemp && f.forecastMaxtemp.value) + '°<span>' + esc(f.forecastMintemp && f.forecastMintemp.value) + '°</span></div>' +
+          '<div>' + (psr ? '<span class="psr p' + lvl + '">' + esc(t('rain')) + ' ' + esc(psr) + '</span>' : '') + '</div></div>';
       }).join('') + '</div>';
     }
     $('wx').innerHTML = h || '<div class="none">' + esc(t('loading')) + '</div>';
