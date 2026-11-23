@@ -12,8 +12,9 @@
 :root{--bg:#0b0f14;--card:#141a22;--card2:#0f141b;--line:#263040;--fg:#eef2f6;--mute:#8a96a6;--ok:#3fd08a;--acc:#6cb6ff;--bad:#ff6b6b}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-system,"PingFang HK","PingFang TC","Noto Sans TC","Helvetica Neue",sans-serif;-webkit-user-select:none;user-select:none;overflow:hidden;-webkit-text-size-adjust:100%}
-#app{height:100%;display:grid;grid-template-columns:1fr 1fr;gap:1.6vmin;padding:max(2vmin,env(safe-area-inset-top)) max(2vmin,env(safe-area-inset-right)) max(1.6vmin,env(safe-area-inset-bottom)) max(2vmin,env(safe-area-inset-left))}
-.col{display:flex;flex-direction:column;gap:1.6vmin;min-height:0}
+#app{height:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.6vmin;padding:max(2vmin,env(safe-area-inset-top)) max(2vmin,env(safe-area-inset-right)) max(1.6vmin,env(safe-area-inset-bottom)) max(2vmin,env(safe-area-inset-left))}
+.col{display:flex;flex-direction:column;gap:1.6vmin;min-height:0;min-width:0}
+.busico{width:2.6vmin;height:2.6vmin;vertical-align:-.5vmin;margin-right:.8vmin}
 .card{background:var(--card);border:1px solid var(--line);border-radius:2.2vmin;padding:2.2vmin;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .h{font-size:2vmin;color:var(--mute);letter-spacing:.08em;margin-bottom:1.2vmin;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase}
 /* clock */
@@ -130,7 +131,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       <div id="warn"><div class="none">…</div></div>
     </div>
     <div class="card" id="busCard">
-      <div class="h"><span id="hBus">九巴到站時間</span><span id="busUpd"></span></div>
+      <div class="h"><span><svg class="busico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="2" width="18" height="17" rx="3" fill="#e5484d"/><rect x="5.5" y="4.5" width="13" height="6" rx="1" fill="#fff"/><circle cx="7.5" cy="15" r="1.4" fill="#fff"/><circle cx="16.5" cy="15" r="1.4" fill="#fff"/><rect x="5" y="19" width="3" height="3" rx="1" fill="#e5484d"/><rect x="16" y="19" width="3" height="3" rx="1" fill="#e5484d"/></svg><span id="hBus">九巴到站時間</span></span><span id="busUpd"></span></div>
       <div id="bus"></div>
       <div id="foot"></div>
     </div>
