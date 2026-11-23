@@ -63,9 +63,11 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 #bus{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
 .stopname{font-size:calc(2.4*var(--u));font-weight:600;color:var(--acc);margin:calc(1.4*var(--u)) 0 calc(.4*var(--u))}
 .stopname:first-child{margin-top:0}
-.row{display:grid;grid-template-columns:calc(11.5*var(--u)) minmax(0,1fr) auto;align-items:center;gap:calc(1.4*var(--u));padding:calc(1.2*var(--u)) 0;border-top:1px solid var(--line)}
-.rt{font-size:calc(8*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em}
-.rt.long{font-size:calc(4.4*var(--u));letter-spacing:-.04em}
+.row{display:grid;grid-template-columns:var(--rtw,calc(11.5*var(--u))) minmax(0,1fr) auto;align-items:center;gap:calc(1.4*var(--u));padding:calc(1.2*var(--u)) 0;border-top:1px solid var(--line)}
+.rt{font-size:calc(8*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.rt span{display:inline-block}
+.rt.mid{font-size:calc(6.6*var(--u))}
+.rt.long{font-size:calc(5.4*var(--u));letter-spacing:-.03em}
 .dest{font-size:calc(2.6*var(--u));line-height:1.25;min-width:0}
 .dest small{display:block;color:var(--mute);font-size:calc(1.9*var(--u));margin-top:calc(.3*var(--u))}
 .etas{display:flex;gap:calc(2*var(--u));align-items:baseline;justify-content:flex-end}
@@ -410,12 +412,16 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
           return '<div class="' + cls + '">' + x.m + (i ? '' : '<small>' + esc(t('min')) + '</small>') + '</div>';
         }).join('') : '<div class="none">' + esc(rmk || t('noEta')) + '</div>';
         var sub = etas.length && etas[0].sch ? t('sched') : (etas.length ? '' : '');
-        h += '<div class="row"><div class="rt' + (r.route.length >= 4 ? ' long' : '') + '">' + esc(r.route) + '</div>' +
+        h += '<div class="row"><div class="rt' + (r.route.length >= 4 ? ' long' : r.route.length === 3 ? ' mid' : '') + '"><span>' + esc(r.route) + '</span></div>' +
           '<div class="dest">' + esc(t('to')) + ' ' + esc(r.dest) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>' +
           '<div class="etas">' + cells + '</div></div>';
       });
     });
     box.innerHTML = h;
+    // size the route column to the widest route number shown, so it never runs into the destination
+    var w = 0;
+    Array.prototype.forEach.call(box.querySelectorAll('.rt span'), function (el) { w = Math.max(w, el.getBoundingClientRect().width); });
+    if (w) box.style.setProperty('--rtw', Math.ceil(w + 4) + 'px');
     $('busUpd').textContent = ok.bus ? t('updated') + ' ' + hhmm(new Date(ok.bus)) : '';
   }
 
