@@ -70,7 +70,9 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 .rt.long{font-size:calc(6.5*var(--u));letter-spacing:-.03em}
 .dest{font-size:calc(2.6*var(--u));line-height:1.25;min-width:0}
 .dest small{display:block;color:var(--mute);font-size:calc(1.9*var(--u));margin-top:calc(.3*var(--u))}
-.etas{display:flex;gap:calc(2*var(--u));align-items:baseline;justify-content:flex-end}
+.etas{display:flex;gap:calc(2*var(--u));align-items:center;justify-content:flex-end}
+.more{font-size:calc(2.6*var(--u));color:#aab4c0;font-weight:600;line-height:1.2;text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+.more small{display:block;font-size:calc(1.9*var(--u));color:var(--mute);font-weight:500}
 .eta{font-size:calc(8.6*var(--u));font-weight:700;font-variant-numeric:tabular-nums;line-height:1;text-align:right;min-width:calc(12*var(--u))}
 .eta small{font-size:calc(3.4*var(--u));font-weight:500;color:var(--mute);margin-left:calc(.4*var(--u))}
 .eta.l{font-size:calc(5.3*var(--u));color:#aab4c0;font-weight:600;min-width:calc(6.5*var(--u))}
@@ -162,20 +164,20 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
   var S = {
     tc: { weather: '天氣', warn: '天氣警告', bus: '九巴到站時間', noWarn: '現時沒有天氣警告', issued: '發出',
       min: '分鐘', arriving: '即將到達', humidity: '濕度', uv: '紫外線', noStop: '尚未設定巴士站', setup: '設定巴士站',
-      noEta: '暫無班次資料', updated: '更新', offline: '連線中斷', to: '往', settings: '設定', lang: '語言', stops: '巴士站',
+      noEta: '暫無班次資料', updated: '更新', offline: '連線中斷', to: '往', settings: '設定', lang: '語言', stops: '按車站加入(顯示所有路線)',
       nearby: '📍 尋找附近車站', search: '搜尋', searchPh: '輸入車站名稱,例如:彩虹', remove: '移除',
       routes: '顯示路線(全部不選 = 顯示全部)', station: '氣溫地點', dim: '夜間調暗(23:00–07:00)', done: '完成',
       loading: '載入中…', locErr: '未能取得位置,請改用搜尋', none: '找不到車站', link: '此面板的連結(完成設定後才「加入主畫面」)',
       m: '米', copy: '複製連結', copied: '已複製', sched: '原定班次', wxErr: '天氣資料', busErr: '巴士資料', warnErr: '警告資料',
-      hko: '香港天文台', rain: '降雨', am: '上午', pm: '下午', today: '今日', labelPh: '顯示名稱(可選),例如:家門口 / 對面', addedMsg: '已加入 ✓ 如要加對面車站,可在下面再選一個。', busy: '九巴伺服器繁忙,請等一兩分鐘再試', routesNote: '只列出現時有班次的路線;夜間未開出的路線可能未有顯示。' },
+      hko: '香港天文台', rain: '降雨', then: '之後', byRoute: '按路線加入(只顯示該路線)', routePh: '輸入路線號碼,例如:64K', noRoute: '找不到此九巴路線', pickStop: '請選擇你上車的車站:', addedMsg2: '已加入 ✓ 可再選另一方向的車站。', am: '上午', pm: '下午', today: '今日', labelPh: '顯示名稱(可選),例如:家門口 / 對面', addedMsg: '已加入 ✓ 如要加對面車站,可在下面再選一個。', busy: '九巴伺服器繁忙,請等一兩分鐘再試', routesNote: '只列出現時有班次的路線;夜間未開出的路線可能未有顯示。' },
     en: { weather: 'Weather', warn: 'Weather warnings', bus: 'KMB arrivals', noWarn: 'No weather warnings in force', issued: 'issued',
       min: 'min', arriving: 'Arriving', humidity: 'Humidity', uv: 'UV', noStop: 'No bus stop set yet', setup: 'Set up bus stop',
-      noEta: 'No ETA available', updated: 'Updated', offline: 'Offline', to: 'To', settings: 'Settings', lang: 'Language', stops: 'Bus stops',
+      noEta: 'No ETA available', updated: 'Updated', offline: 'Offline', to: 'To', settings: 'Settings', lang: 'Language', stops: 'Add by stop (shows all routes)',
       nearby: '📍 Find stops near me', search: 'Search', searchPh: 'Stop name, e.g. Choi Hung', remove: 'Remove',
       routes: 'Routes to show (none ticked = all)', station: 'Temperature station', dim: 'Dim at night (23:00–07:00)', done: 'Done',
       loading: 'Loading…', locErr: 'Could not get your location — try search instead', none: 'No stops found', link: 'Link to this panel (finish setup before “Add to Home Screen”)',
       m: 'm', copy: 'Copy link', copied: 'Copied', sched: 'Scheduled', wxErr: 'weather', busErr: 'bus', warnErr: 'warnings',
-      hko: 'Hong Kong Observatory', rain: 'Rain', am: 'AM', pm: 'PM', today: 'Today', labelPh: 'Display name (optional), e.g. Outside home / Opposite', addedMsg: 'Added ✓ To add the stop across the road, pick another below.', busy: 'KMB server is busy — wait a minute or two and try again', routesNote: 'Only routes running now are listed; night-time gaps may hide some.' }
+      hko: 'Hong Kong Observatory', rain: 'Rain', then: 'Then', byRoute: 'Add by route (shows only that route)', routePh: 'Route number, e.g. 64K', noRoute: 'No such KMB route', pickStop: 'Pick the stop where you board:', addedMsg2: 'Added ✓ You can pick a stop in the other direction too.', am: 'AM', pm: 'PM', today: 'Today', labelPh: 'Display name (optional), e.g. Outside home / Opposite', addedMsg: 'Added ✓ To add the stop across the road, pick another below.', busy: 'KMB server is busy — wait a minute or two and try again', routesNote: 'Only routes running now are listed; night-time gaps may hide some.' }
   };
 
   // Badge styles for warning codes (labels are ours; full names come from HKO)
@@ -406,11 +408,14 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
           etas.push({ m: Math.round(diff / 60e3), sch: /原定|Scheduled/i.test((e.rmk_tc || '') + (e.rmk_en || '')) });
         });
         etas = etas.slice(0, 3);
-        var cells = etas.length ? etas.map(function (x, i) {
-          var cls = 'eta' + (i ? ' l' : '') + (x.sch ? ' sch' : '');
-          if (x.m <= 0) return '<div class="' + cls + ' arr">' + esc(t('arriving')) + '</div>';
-          return '<div class="' + cls + '">' + x.m + (i ? '' : '<small>' + esc(t('min')) + '</small>') + '</div>';
-        }).join('') : '<div class="none">' + esc(rmk || t('noEta')) + '</div>';
+        var cells;
+        if (etas.length) {
+          var x0 = etas[0], cls0 = 'eta' + (x0.sch ? ' sch' : '');
+          cells = x0.m <= 0 ? '<div class="' + cls0 + ' arr">' + esc(t('arriving')) + '</div>'
+            : '<div class="' + cls0 + '">' + x0.m + '<small>' + esc(t('min')) + '</small></div>';
+          var rest = etas.slice(1).map(function (x) { return x.m <= 0 ? t('arriving') : String(x.m); });
+          if (rest.length) cells += '<div class="more"><small>' + esc(t('then')) + '</small>' + esc(rest.join(' · ')) + ' ' + esc(t('min')) + '</div>';
+        } else cells = '<div class="none">' + esc(rmk || t('noEta')) + '</div>';
         var sub = etas.length && etas[0].sch ? t('sched') : (etas.length ? '' : '');
         h += '<div class="row"><div class="rt' + (r.route.length >= 4 ? ' long' : r.route.length === 3 ? ' mid' : '') + '"><span>' + esc(r.route) + '</span></div>' +
           '<div class="dest">' + esc(t('to')) + ' ' + esc(r.dest) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>' +
@@ -485,6 +490,18 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     var h = '<h2>⚙︎ ' + esc(t('settings')) + '</h2>';
     h += '<h3>' + esc(t('lang')) + '</h3><div class="seg"><button data-act="lang" data-v="tc" class="' + (cfg.lang === 'tc' ? 'on' : '') + '">繁體中文</button><button data-act="lang" data-v="en" class="' + (isEn() ? 'on' : '') + '">English</button></div>';
 
+    h += '<h3>' + esc(t('byRoute')) + '</h3>';
+    h += '<div class="inp"><input id="rq" type="search" autocapitalize="characters" placeholder="' + esc(t('routePh')) + '" value="' + esc(rsearch.route) + '"><button class="sbtn pri" data-act="rfind">' + esc(t('search')) + '</button></div>';
+    if (rsearch.msg) h += '<div class="hint">' + esc(rsearch.msg) + '</div>';
+    (rsearch.dirs || []).forEach(function (d) {
+      h += '<div class="hint" style="margin-top:12px;font-weight:600;color:var(--fg)">' + esc(rsearch.route) + ' ' + esc(t('to')) + ' ' + esc(isEn() ? d.dest_en : d.dest_tc) + '</div>';
+      h += '<div class="res">' + d.stops.map(function (st) {
+        var key = rsearch.route + '_' + d.dir + '_' + d.st;
+        var added = cfg.stops.some(function (x) { return x.id === st.id && (x.routes || []).indexOf(key) >= 0; });
+        return '<div data-act="radd" data-id="' + esc(st.id) + '" data-k="' + esc(key) + '"' + (added ? ' class="added"' : '') + '><span>' + (added ? '✓ ' : '') + esc(st.seq + '. ' + (isEn() ? st.en : st.tc)) + '</span></div>';
+      }).join('') + '</div>';
+    });
+
     h += '<h3>' + esc(t('stops')) + '</h3>';
     h += '<div class="inp"><button class="sbtn pri" data-act="near">' + esc(t('nearby')) + '</button></div>';
     h += '<div class="inp" style="margin-top:8px"><input id="q" type="search" placeholder="' + esc(t('searchPh')) + '"><button class="sbtn" data-act="find">' + esc(t('search')) + '</button></div>';
@@ -535,6 +552,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     Array.prototype.forEach.call(document.querySelectorAll('.lbl'), function (el) {
       el.oninput = function () { cfg.stops[+el.getAttribute('data-i')].label = el.value.trim(); saveCfg(); renderBus(); };
     });
+    var rqi = $('rq'); if (rqi) rqi.onkeydown = function (e) { if (e.key === 'Enter') doRouteFind(); };
     var qi = $('q'); if (qi) qi.onkeydown = function (e) { if (e.key === 'Enter') doFind(); };
   }
 
@@ -568,6 +586,55 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       }).catch(function () { search.msg = t('busy'); renderSet(); });
     }, function () { search.msg = t('locErr'); renderSet(); }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
   }
+  // ---- add a single route at one stop ----
+  var rsearch = { route: '', dirs: null, msg: '' };
+  function stopNames(ids) {
+    return ensureStops().then(function (all) {
+      var m = {}; all.forEach(function (s) { m[s.stop] = s; }); return m;
+    }, function () {
+      var m = {};
+      return Promise.all(ids.map(function (id) {
+        return getJSON(KMB + '/stop/' + id).then(function (d) { if (d && d.data) m[id] = d.data; }, function () {});
+      })).then(function () { return m; });
+    });
+  }
+  function doRouteFind() {
+    var r = (($('rq') && $('rq').value) || '').trim().toUpperCase();
+    if (!r) return;
+    rsearch = { route: r, dirs: null, msg: t('loading') }; renderSet();
+    var dirs = [['outbound', 'O'], ['inbound', 'I']];
+    Promise.all(dirs.map(function (d) {
+      return Promise.all([
+        getJSON(KMB + '/route/' + encodeURIComponent(r) + '/' + d[0] + '/1').catch(function () { return null; }),
+        getJSON(KMB + '/route-stop/' + encodeURIComponent(r) + '/' + d[0] + '/1').catch(function () { return null; })
+      ]).then(function (x) {
+        var info = x[0] && x[0].data, list = (x[1] && x[1].data) || [];
+        if (!list.length) return null;
+        return { dir: d[1], st: 1, dest_tc: info && info.dest_tc, dest_en: info && info.dest_en, raw: list };
+      });
+    })).then(function (res) {
+      res = res.filter(Boolean);
+      if (!res.length) { rsearch.msg = t('noRoute'); renderSet(); return; }
+      var ids = []; res.forEach(function (d) { d.raw.forEach(function (x) { ids.push(x.stop); }); });
+      return stopNames(ids).then(function (m) {
+        res.forEach(function (d) {
+          d.stops = d.raw.map(function (x) { var s = m[x.stop] || {}; return { id: x.stop, seq: x.seq, tc: s.name_tc || x.stop, en: s.name_en || x.stop }; });
+        });
+        rsearch.dirs = res; rsearch.msg = t('pickStop'); renderSet();
+      });
+    }).catch(function () { rsearch.msg = t('busy'); renderSet(); });
+  }
+  function addRouteStop(id, key) {
+    var st = null;
+    (rsearch.dirs || []).forEach(function (d) { d.stops.forEach(function (x) { if (x.id === id) st = x; }); });
+    if (!st) return;
+    var ex = null;
+    cfg.stops.forEach(function (x) { if (x.id === id && x.routes && x.routes.length) ex = x; });
+    if (ex) { if (ex.routes.indexOf(key) < 0) ex.routes.push(key); }
+    else cfg.stops.push({ id: id, tc: st.tc, en: st.en, routes: [key] });
+    rsearch.msg = t('addedMsg2');
+    saveCfg(); renderSet(); loadBus();
+  }
   function addStop(id) {
     var all = cache.stops || [], s = null;
     for (var i = 0; i < all.length; i++) if (all[i].stop === id) { s = all[i]; break; }
@@ -590,6 +657,8 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     else if (a === 'near') doNear();
     else if (a === 'find') doFind();
     else if (a === 'add') addStop(el.getAttribute('data-id'));
+    else if (a === 'rfind') doRouteFind();
+    else if (a === 'radd') addRouteStop(el.getAttribute('data-id'), el.getAttribute('data-k'));
     else if (a === 'rm') { var i = +el.getAttribute('data-i'); delete data.bus[cfg.stops[i].id]; cfg.stops.splice(i, 1); saveCfg(); renderSet(); renderBus(); }
     else if (a === 'chip') {
       var s = cfg.stops[+el.getAttribute('data-i')], k = el.getAttribute('data-k');
