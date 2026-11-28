@@ -77,8 +77,9 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 .stopname{font-size:calc(2.4*var(--u));font-weight:600;color:var(--acc);margin:calc(.8*var(--u)) 0 calc(.2*var(--u));display:flex;justify-content:space-between;align-items:baseline;gap:calc(2*var(--u))}
 .stopname .then{color:#aab4c0;font-weight:500;font-size:calc(2.2*var(--u));white-space:nowrap}
 .stopname .then b{color:var(--fg);font-size:calc(2.8*var(--u));font-weight:700}
-.stopname:first-child{margin-top:0}
-.row{display:grid;grid-template-columns:var(--rtw,calc(11.5*var(--u))) minmax(0,1fr) auto;align-items:center;gap:calc(1.4*var(--u));padding:calc(.3*var(--u)) 0;border-top:1px solid var(--line)}
+.stopname{border-top:1px solid var(--line);padding-top:calc(.8*var(--u))}
+.stopname:first-child{margin-top:0;border-top:0;padding-top:0}
+.row{display:grid;grid-template-columns:var(--rtw,calc(11.5*var(--u))) minmax(0,1fr) auto;align-items:center;gap:calc(1.4*var(--u));padding:calc(.3*var(--u)) 0}
 .rt{font-size:calc(11*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em;white-space:nowrap}
 .rt span{display:inline-block}
 .rt.mid{font-size:calc(9.1*var(--u))}
