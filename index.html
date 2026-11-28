@@ -61,16 +61,16 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 .wb.sev{border-color:var(--bad);animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 calc(.8*var(--u)) rgba(255,107,107,.25)}}
 /* bus */
-#busCard{flex:1}
-#radarCard{flex:none;height:calc(35*var(--u));flex-direction:row;gap:calc(2*var(--u));padding:calc(1.6*var(--u))}
-.rmap{flex:none;width:calc(35*var(--u) - 3.2*var(--u) - 2px);height:100%;overflow:hidden;position:relative;border-radius:calc(1.2*var(--u));background:#6b6fc7}
+#busCard{flex:none}
+#radarCard{flex:1;min-height:0;flex-direction:row;gap:calc(2*var(--u));padding:calc(1.6*var(--u))}
+.rmap{flex:none;height:100%;aspect-ratio:1/1;overflow:hidden;position:relative;border-radius:calc(1.2*var(--u));background:#6b6fc7}
 .rmap img{position:absolute;left:0;top:0;height:100%;width:auto;opacity:0}
 .rmap img.on{opacity:1}
 .rinfo{flex:1;min-width:0;display:flex;flex-direction:column}
 .rsub{font-size:calc(1.9*var(--u));color:var(--mute);margin-top:calc(.4*var(--u))}
 .rtime{font-size:calc(5.2*var(--u));font-weight:700;font-variant-numeric:tabular-nums;margin-top:calc(1.2*var(--u));line-height:1}
-.rdots{display:flex;gap:calc(.8*var(--u));margin-top:calc(1.2*var(--u))}
-.rdots i{width:calc(1.3*var(--u));height:calc(1.3*var(--u));border-radius:50%;background:#2c3748}
+.rdots{display:flex;flex-wrap:wrap;gap:calc(.6*var(--u));margin-top:calc(1.2*var(--u))}
+.rdots i{width:calc(1.1*var(--u));height:calc(1.1*var(--u));border-radius:50%;background:#2c3748}
 .rdots i.on{background:var(--acc)}
 .rinfo #foot{margin-top:auto;font-size:calc(1.4*var(--u));line-height:1.35}
 #bus{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
@@ -467,6 +467,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     var w = 0;
     Array.prototype.forEach.call(box.querySelectorAll('.rt span'), function (el) { w = Math.max(w, el.getBoundingClientRect().width); });
     if (w) box.style.setProperty('--rtw', Math.ceil(w + 4) + 'px');
+    $('radarCard').style.display = ''; setTimeout(fitRadar, 0);
     $('busUpd').textContent = ok.bus ? t('updated') + ' ' + hhmm(new Date(ok.bus)) : '';
   }
 
@@ -725,7 +726,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     tick(); renderWarn(); renderWx(); renderBus(); renderFoot();
   }
   // ---------- radar (HKO lightning + radar, 64 km, cloud-to-ground) ----------
-  var RADAR = 'https://www.hko.gov.hk/wxinfo/llis/llisradar/images/lli_64CG_', STEP = 6 * 60e3, NFRAMES = 6;
+  var RADAR = 'https://www.hko.gov.hk/wxinfo/llis/llisradar/images/lli_64CG_', STEP = 6 * 60e3, NFRAMES = 12;
   var radar = { frames: [], i: 0, hold: 0, latest: 0 };
   function rName(ms) { return new Date(ms + 8 * 3600e3).toISOString().replace(/[-T:]/g, '').slice(0, 12); }
   function rProbe(ms) {
@@ -734,7 +735,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
   function loadRadar() {
     var t0 = Math.floor(Date.now() / STEP) * STEP;
     function find(k) {
-      if (k > 12) return Promise.resolve(0);
+      if (k > 15) return Promise.resolve(0);
       return rProbe(t0 - k * STEP).then(function (im) { return im ? t0 - k * STEP : find(k + 1); });
     }
     return find(0).then(function (latest) {
@@ -750,6 +751,14 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       });
     }).catch(function () {});
   }
+  function fitRadar() {
+    var m = $('rmap'), c = $('radarCard'); if (!m) return;
+    var hgt = m.clientHeight;
+    m.style.width = hgt + 'px';
+    c.style.display = '';
+    if (hgt < 90) c.style.display = 'none';   // too little room left: hide rather than squeeze the buses
+  }
+  window.addEventListener('resize', fitRadar);
   function showFrame() {
     var f = radar.frames; if (!f.length) return;
     f.forEach(function (x, j) { x.el.className = j === radar.i ? 'on' : ''; });
