@@ -62,26 +62,37 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 @keyframes pulse{50%{box-shadow:0 0 0 calc(.8*var(--u)) rgba(255,107,107,.25)}}
 /* bus */
 #busCard{flex:1}
+#radarCard{flex:none;height:calc(35*var(--u));flex-direction:row;gap:calc(2*var(--u));padding:calc(1.6*var(--u))}
+.rmap{flex:none;width:calc(35*var(--u) - 3.2*var(--u) - 2px);height:100%;overflow:hidden;position:relative;border-radius:calc(1.2*var(--u));background:#6b6fc7}
+.rmap img{position:absolute;left:0;top:0;height:100%;width:auto;opacity:0}
+.rmap img.on{opacity:1}
+.rinfo{flex:1;min-width:0;display:flex;flex-direction:column}
+.rsub{font-size:calc(1.9*var(--u));color:var(--mute);margin-top:calc(.4*var(--u))}
+.rtime{font-size:calc(5.2*var(--u));font-weight:700;font-variant-numeric:tabular-nums;margin-top:calc(1.2*var(--u));line-height:1}
+.rdots{display:flex;gap:calc(.8*var(--u));margin-top:calc(1.2*var(--u))}
+.rdots i{width:calc(1.3*var(--u));height:calc(1.3*var(--u));border-radius:50%;background:#2c3748}
+.rdots i.on{background:var(--acc)}
+.rinfo #foot{margin-top:auto;font-size:calc(1.4*var(--u));line-height:1.35}
 #bus{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
-.stopname{font-size:calc(2.4*var(--u));font-weight:600;color:var(--acc);margin:calc(1.4*var(--u)) 0 calc(.4*var(--u));display:flex;justify-content:space-between;align-items:baseline;gap:calc(2*var(--u))}
+.stopname{font-size:calc(2.4*var(--u));font-weight:600;color:var(--acc);margin:calc(.8*var(--u)) 0 calc(.2*var(--u));display:flex;justify-content:space-between;align-items:baseline;gap:calc(2*var(--u))}
 .stopname .then{color:#aab4c0;font-weight:500;font-size:calc(2.2*var(--u));white-space:nowrap}
 .stopname .then b{color:var(--fg);font-size:calc(2.8*var(--u));font-weight:700}
 .stopname:first-child{margin-top:0}
-.row{display:grid;grid-template-columns:var(--rtw,calc(11.5*var(--u))) minmax(0,1fr) auto;align-items:center;gap:calc(1.4*var(--u));padding:calc(1.2*var(--u)) 0;border-top:1px solid var(--line)}
-.rt{font-size:calc(9.6*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.row{display:grid;grid-template-columns:var(--rtw,calc(11.5*var(--u))) minmax(0,1fr) auto;align-items:center;gap:calc(1.4*var(--u));padding:calc(.3*var(--u)) 0;border-top:1px solid var(--line)}
+.rt{font-size:calc(11*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em;white-space:nowrap}
 .rt span{display:inline-block}
-.rt.mid{font-size:calc(7.9*var(--u))}
-.rt.long{font-size:calc(6.5*var(--u));letter-spacing:-.03em}
+.rt.mid{font-size:calc(9.1*var(--u))}
+.rt.long{font-size:calc(7.5*var(--u));letter-spacing:-.03em}
 .dest{font-size:calc(2.6*var(--u));line-height:1.25;min-width:0}
 .dest small{display:block;color:var(--mute);font-size:calc(1.9*var(--u));margin-top:calc(.3*var(--u))}
 .etas{display:flex;gap:calc(2*var(--u));align-items:center;justify-content:flex-end}
 .more{font-size:calc(2.6*var(--u));color:#aab4c0;font-weight:600;line-height:1.2;text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
 .more small{display:block;font-size:calc(1.9*var(--u));color:var(--mute);font-weight:500}
-.eta{font-size:calc(8.6*var(--u));font-weight:700;font-variant-numeric:tabular-nums;line-height:1;text-align:right;min-width:calc(12*var(--u))}
-.eta small{font-size:calc(3.4*var(--u));font-weight:500;color:var(--mute);margin-left:calc(.4*var(--u))}
+.eta{font-size:calc(9.9*var(--u));font-weight:700;font-variant-numeric:tabular-nums;line-height:1;text-align:right;min-width:calc(12*var(--u))}
+.eta small{font-size:calc(3.9*var(--u));font-weight:500;color:var(--mute);margin-left:calc(.4*var(--u))}
 .eta.l{font-size:calc(5.3*var(--u));color:#aab4c0;font-weight:600;min-width:calc(6.5*var(--u))}
 .eta.l small{font-size:calc(2.8*var(--u))}
-.eta.arr{color:var(--ok);font-size:calc(6.2*var(--u))}
+.eta.arr{color:var(--ok);font-size:calc(7.1*var(--u))}
 .eta.sch{opacity:.75}
 .none{font-size:calc(2.4*var(--u));color:var(--mute)}
 .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(2*var(--u));color:var(--mute);font-size:calc(3*var(--u));text-align:center}
@@ -145,7 +156,16 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     <div class="card" id="busCard">
       <div class="h"><span><svg class="busico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="2" width="18" height="17" rx="3" fill="#e5484d"/><rect x="5.5" y="4.5" width="13" height="6" rx="1" fill="#fff"/><circle cx="7.5" cy="15" r="1.4" fill="#fff"/><circle cx="16.5" cy="15" r="1.4" fill="#fff"/><rect x="5" y="19" width="3" height="3" rx="1" fill="#e5484d"/><rect x="16" y="19" width="3" height="3" rx="1" fill="#e5484d"/></svg><span id="hBus">九巴到站時間</span></span><span id="busUpd"></span></div>
       <div id="bus"></div>
-      <div id="foot"></div>
+    </div>
+    <div class="card" id="radarCard">
+      <div class="rmap" id="rmap"></div>
+      <div class="rinfo">
+        <div class="h" style="margin:0"><span id="hRadar">雷達圖 · 閃電</span></div>
+        <div class="rsub" id="rsub">64 公里範圍</div>
+        <div class="rtime" id="rtime">--:--</div>
+        <div class="rdots" id="rdots"></div>
+        <div id="foot"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -173,7 +193,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       routes: '顯示路線(全部不選 = 顯示全部)', station: '氣溫地點', dim: '夜間調暗(23:00–07:00)', done: '完成',
       loading: '載入中…', locErr: '未能取得位置,請改用搜尋', none: '找不到車站', link: '此面板的連結(完成設定後才「加入主畫面」)',
       m: '米', copy: '複製連結', copied: '已複製', sched: '原定班次', wxErr: '天氣資料', busErr: '巴士資料', warnErr: '警告資料',
-      hko: '香港天文台', rain: '降雨', then: '之後', byRoute: '按路線加入(只顯示該路線)', routePh: '輸入路線號碼,例如:64K', noRoute: '找不到此九巴路線', pickStop: '請選擇你上車的車站:', addedMsg2: '已加入 ✓ 可再選另一方向的車站。', am: '上午', pm: '下午', today: '今日', labelPh: '顯示名稱(可選),例如:家門口 / 對面', addedMsg: '已加入 ✓ 如要加對面車站,可在下面再選一個。', busy: '九巴伺服器繁忙,請等一兩分鐘再試', routesNote: '只列出現時有班次的路線;夜間未開出的路線可能未有顯示。' },
+      hko: '香港天文台', rain: '降雨', radar: '雷達圖 · 閃電', radarSub: '64 公里範圍 · 每 6 分鐘', then: '之後', byRoute: '按路線加入(只顯示該路線)', routePh: '輸入路線號碼,例如:64K', noRoute: '找不到此九巴路線', pickStop: '請選擇你上車的車站:', addedMsg2: '已加入 ✓ 可再選另一方向的車站。', am: '上午', pm: '下午', today: '今日', labelPh: '顯示名稱(可選),例如:家門口 / 對面', addedMsg: '已加入 ✓ 如要加對面車站,可在下面再選一個。', busy: '九巴伺服器繁忙,請等一兩分鐘再試', routesNote: '只列出現時有班次的路線;夜間未開出的路線可能未有顯示。' },
     en: { weather: 'Weather', warn: 'Weather warnings', bus: 'KMB arrivals', noWarn: 'No weather warnings in force', issued: 'issued',
       min: 'min', arriving: 'Arriving', humidity: 'Humidity', uv: 'UV', noStop: 'No bus stop set yet', setup: 'Set up bus stop',
       noEta: 'No ETA available', updated: 'Updated', offline: 'Offline', to: 'To', settings: 'Settings', lang: 'Language', stops: 'Add by stop (shows all routes)',
@@ -181,7 +201,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       routes: 'Routes to show (none ticked = all)', station: 'Temperature station', dim: 'Dim at night (23:00–07:00)', done: 'Done',
       loading: 'Loading…', locErr: 'Could not get your location — try search instead', none: 'No stops found', link: 'Link to this panel (finish setup before “Add to Home Screen”)',
       m: 'm', copy: 'Copy link', copied: 'Copied', sched: 'Scheduled', wxErr: 'weather', busErr: 'bus', warnErr: 'warnings',
-      hko: 'Hong Kong Observatory', rain: 'Rain', then: 'Then', byRoute: 'Add by route (shows only that route)', routePh: 'Route number, e.g. 64K', noRoute: 'No such KMB route', pickStop: 'Pick the stop where you board:', addedMsg2: 'Added ✓ You can pick a stop in the other direction too.', am: 'AM', pm: 'PM', today: 'Today', labelPh: 'Display name (optional), e.g. Outside home / Opposite', addedMsg: 'Added ✓ To add the stop across the road, pick another below.', busy: 'KMB server is busy — wait a minute or two and try again', routesNote: 'Only routes running now are listed; night-time gaps may hide some.' }
+      hko: 'Hong Kong Observatory', rain: 'Rain', radar: 'Radar · lightning', radarSub: '64 km range · every 6 min', then: 'Then', byRoute: 'Add by route (shows only that route)', routePh: 'Route number, e.g. 64K', noRoute: 'No such KMB route', pickStop: 'Pick the stop where you board:', addedMsg2: 'Added ✓ You can pick a stop in the other direction too.', am: 'AM', pm: 'PM', today: 'Today', labelPh: 'Display name (optional), e.g. Outside home / Opposite', addedMsg: 'Added ✓ To add the stop across the road, pick another below.', busy: 'KMB server is busy — wait a minute or two and try again', routesNote: 'Only routes running now are listed; night-time gaps may hide some.' }
   };
 
   // Badge styles for warning codes (labels are ours; full names come from HKO)
@@ -701,10 +721,48 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
   // ---------- boot ----------
   function applyLang() {
     document.documentElement.lang = isEn() ? 'en' : 'zh-Hant';
-    $('hWx').textContent = t('weather'); $('hWarn').textContent = t('warn'); $('hBus').textContent = t('bus');
+    $('hWx').textContent = t('weather'); $('hWarn').textContent = t('warn'); $('hBus').textContent = t('bus'); $('hRadar').textContent = t('radar'); $('rsub').textContent = t('radarSub');
     tick(); renderWarn(); renderWx(); renderBus(); renderFoot();
   }
-  function refreshAll() { loadWarn(); loadNow(); loadFc(); loadBus(); }
+  // ---------- radar (HKO lightning + radar, 64 km, cloud-to-ground) ----------
+  var RADAR = 'https://www.hko.gov.hk/wxinfo/llis/llisradar/images/lli_64CG_', STEP = 6 * 60e3, NFRAMES = 6;
+  var radar = { frames: [], i: 0, hold: 0, latest: 0 };
+  function rName(ms) { return new Date(ms + 8 * 3600e3).toISOString().replace(/[-T:]/g, '').slice(0, 12); }
+  function rProbe(ms) {
+    return new Promise(function (res) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = RADAR + rName(ms) + '.png'; });
+  }
+  function loadRadar() {
+    var t0 = Math.floor(Date.now() / STEP) * STEP;
+    function find(k) {
+      if (k > 12) return Promise.resolve(0);
+      return rProbe(t0 - k * STEP).then(function (im) { return im ? t0 - k * STEP : find(k + 1); });
+    }
+    return find(0).then(function (latest) {
+      if (!latest || latest === radar.latest) return;
+      var times = []; for (var k = NFRAMES - 1; k >= 0; k--) times.push(latest - k * STEP);
+      return Promise.all(times.map(rProbe)).then(function (ims) {
+        var box = $('rmap'), frames = [];
+        box.innerHTML = '';
+        ims.forEach(function (im, j) { if (im) { box.appendChild(im); frames.push({ t: times[j], el: im }); } });
+        radar.frames = frames; radar.latest = latest; radar.i = frames.length - 1; radar.hold = 0;
+        $('rdots').innerHTML = frames.map(function () { return '<i></i>'; }).join('');
+        showFrame();
+      });
+    }).catch(function () {});
+  }
+  function showFrame() {
+    var f = radar.frames; if (!f.length) return;
+    f.forEach(function (x, j) { x.el.className = j === radar.i ? 'on' : ''; });
+    Array.prototype.forEach.call($('rdots').children, function (d, j) { d.className = j === radar.i ? 'on' : ''; });
+    $('rtime').textContent = hhmm(new Date(f[radar.i].t));
+  }
+  function stepRadar() {
+    var f = radar.frames; if (f.length < 2) return;
+    if (radar.i === f.length - 1 && radar.hold < 3) { radar.hold++; return; }   // pause on the latest frame
+    radar.hold = 0; radar.i = (radar.i + 1) % f.length; showFrame();
+  }
+
+  function refreshAll() { loadWarn(); loadNow(); loadFc(); loadBus(); loadRadar(); }
 
   applyLang();
   refreshAll();
@@ -713,6 +771,8 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
   setInterval(loadWarn, EVERY.warn);
   setInterval(loadNow, EVERY.now);
   setInterval(loadFc, EVERY.fc);
+  setInterval(loadRadar, 3 * 60e3);
+  setInterval(stepRadar, 700);
   setInterval(renderBus, 15e3);   // keep "x min" counting down between fetches
   setTimeout(function () { if (navigator.onLine !== false) location.reload(); }, EVERY.reload);
   keepAwake();
