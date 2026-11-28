@@ -61,15 +61,15 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 .wb.sev{border-color:var(--bad);animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 calc(.8*var(--u)) rgba(255,107,107,.25)}}
 /* bus */
-#busCard{flex:none}
-#radarCard{flex:1;min-height:0;flex-direction:row;gap:calc(2*var(--u));padding:calc(1.6*var(--u))}
-.rmap{flex:none;height:100%;aspect-ratio:1/1;overflow:hidden;position:relative;border-radius:calc(1.2*var(--u));background:#6b6fc7}
+#busCard{flex:0 1 auto}
+#radarCard{flex:1;min-height:calc(16*var(--u));flex-direction:row;gap:calc(2*var(--u));padding:calc(1.6*var(--u))}
+.rmap{flex:none;height:100%;min-height:calc(14*var(--u));aspect-ratio:1/1;overflow:hidden;position:relative;border-radius:calc(1.2*var(--u));background:#6b6fc7}
 .rmap img{position:absolute;left:0;top:0;height:100%;width:auto;opacity:0}
 .rmap img.on{opacity:1}
-.rinfo{flex:1;min-width:0;display:flex;flex-direction:column}
+.rinfo{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end;text-align:right}
 .rsub{font-size:calc(1.9*var(--u));color:var(--mute);margin-top:calc(.4*var(--u))}
 .rtime{font-size:calc(5.2*var(--u));font-weight:700;font-variant-numeric:tabular-nums;margin-top:calc(1.2*var(--u));line-height:1}
-.rdots{display:flex;flex-wrap:wrap;gap:calc(.6*var(--u));margin-top:calc(1.2*var(--u))}
+.rdots{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:calc(.6*var(--u));margin-top:calc(1.2*var(--u))}
 .rdots i{width:calc(1.1*var(--u));height:calc(1.1*var(--u));border-radius:50%;background:#2c3748}
 .rdots i.on{background:var(--acc)}
 .rinfo #foot{margin-top:auto;font-size:calc(1.4*var(--u));line-height:1.35}
@@ -468,7 +468,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     var w = 0;
     Array.prototype.forEach.call(box.querySelectorAll('.rt span'), function (el) { w = Math.max(w, el.getBoundingClientRect().width); });
     if (w) box.style.setProperty('--rtw', Math.ceil(w + 4) + 'px');
-    $('radarCard').style.display = ''; setTimeout(fitRadar, 0);
+    setTimeout(fitRadar, 0);
     $('busUpd').textContent = ok.bus ? t('updated') + ' ' + hhmm(new Date(ok.bus)) : '';
   }
 
@@ -748,16 +748,14 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
         ims.forEach(function (im, j) { if (im) { box.appendChild(im); frames.push({ t: times[j], el: im }); } });
         radar.frames = frames; radar.latest = latest; radar.i = frames.length - 1; radar.hold = 0;
         $('rdots').innerHTML = frames.map(function () { return '<i></i>'; }).join('');
-        showFrame();
+        showFrame(); fitRadar();
       });
     }).catch(function () {});
   }
   function fitRadar() {
     var m = $('rmap'), c = $('radarCard'); if (!m) return;
     var hgt = m.clientHeight;
-    m.style.width = hgt + 'px';
-    c.style.display = '';
-    if (hgt < 90) c.style.display = 'none';   // too little room left: hide rather than squeeze the buses
+    if (hgt > 20) m.style.width = hgt + 'px';   // keep the map square; never hide it
   }
   window.addEventListener('resize', fitRadar);
   function showFrame() {
@@ -783,6 +781,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
   setInterval(loadFc, EVERY.fc);
   setInterval(loadRadar, 3 * 60e3);
   setInterval(stepRadar, 700);
+  setInterval(fitRadar, 5000);
   setInterval(renderBus, 15e3);   // keep "x min" counting down between fetches
   setTimeout(function () { if (navigator.onLine !== false) location.reload(); }, EVERY.reload);
   keepAwake();
