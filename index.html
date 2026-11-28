@@ -51,6 +51,8 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 #warn{display:flex;flex-wrap:wrap;gap:calc(1.2*var(--u))}
 .wb{display:flex;align-items:center;gap:calc(1.4*var(--u));background:var(--card2);border-radius:calc(1.6*var(--u));padding:calc(.9*var(--u)) calc(1.8*var(--u)) calc(.9*var(--u)) calc(.9*var(--u));border:2px solid var(--line)}
 .badge{min-width:calc(7.5*var(--u));height:calc(7.5*var(--u));border-radius:calc(1.2*var(--u));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:calc(3*var(--u));padding:0 calc(1.1*var(--u));white-space:nowrap;border:2px solid transparent}
+.badge.wimg{background:none;border:0;padding:0}
+.badge.wimg img{width:100%;height:100%;object-fit:contain;image-rendering:auto}
 .badge.tc{font-size:calc(4.6*var(--u))}
 .wname{font-size:calc(2.6*var(--u));font-weight:600;line-height:1.25}
 .wtime{font-size:calc(1.9*var(--u));color:var(--mute);margin-top:calc(.3*var(--u))}
@@ -61,7 +63,9 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
 /* bus */
 #busCard{flex:1}
 #bus{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
-.stopname{font-size:calc(2.4*var(--u));font-weight:600;color:var(--acc);margin:calc(1.4*var(--u)) 0 calc(.4*var(--u))}
+.stopname{font-size:calc(2.4*var(--u));font-weight:600;color:var(--acc);margin:calc(1.4*var(--u)) 0 calc(.4*var(--u));display:flex;justify-content:space-between;align-items:baseline;gap:calc(2*var(--u))}
+.stopname .then{color:#aab4c0;font-weight:500;font-size:calc(2.2*var(--u));white-space:nowrap}
+.stopname .then b{color:var(--fg);font-size:calc(2.8*var(--u));font-weight:700}
 .stopname:first-child{margin-top:0}
 .row{display:grid;grid-template-columns:var(--rtw,calc(11.5*var(--u))) minmax(0,1fr) auto;align-items:center;gap:calc(1.4*var(--u));padding:calc(1.2*var(--u)) 0;border-top:1px solid var(--line)}
 .rt{font-size:calc(9.6*var(--u));font-weight:800;line-height:1;letter-spacing:-.02em;white-space:nowrap}
@@ -272,6 +276,14 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       data.warn = d || {}; ok.warn = Date.now(); bad.warn = false; renderWarn(); renderFoot();
     }).catch(function () { bad.warn = true; renderFoot(); });
   }
+  var WICON = 'https://www.hko.gov.hk/tc/textonly/img/warn/images/';
+  var WFILE = { TC1: 'tc1', TC3: 'tc3', TC8NE: 'tc8ne', TC8NW: 'tc8nw', TC8SE: 'tc8se', TC8SW: 'tc8sw', TC9: 'tc9', TC10: 'tc10',
+    WRAINA: 'raina', WRAINR: 'rainr', WRAINB: 'rainb', WFIREY: 'firey', WFIRER: 'firer', WHOT: 'vhot', WCOLD: 'cold',
+    WFROST: 'frost', WL: 'landslip', WFNTSA: 'ntfl', WTS: 'ts', WMSGNL: 'sms', WTMW: 'tsunami-warn' };
+  var WNAME = { WRAINA: ['黃色暴雨警告信號', 'Amber Rainstorm Warning Signal'], WRAINR: ['紅色暴雨警告信號', 'Red Rainstorm Warning Signal'],
+    WRAINB: ['黑色暴雨警告信號', 'Black Rainstorm Warning Signal'], WFIREY: ['黃色火災危險警告', 'Yellow Fire Danger Warning'],
+    WFIRER: ['紅色火災危險警告', 'Red Fire Danger Warning'] };
+  window.__wIconErr = function (el) { var b = el.parentNode; b.className = b.getAttribute('data-cls'); b.style.cssText = b.getAttribute('data-css'); b.innerHTML = b.getAttribute('data-lbl'); };
   function renderWarn() {
     var d = data.warn; if (!d) return;
     var list = [];
@@ -279,7 +291,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       var w = d[k];
       if (!w || typeof w !== 'object' || w.actionCode === 'CANCEL') return;
       var code = w.code || k;
-      list.push({ code: code, name: w.name || code, time: w.issueTime || w.updateTime, st: W[code] || W[k] || { bg: '#55606e', fg: '#fff', l: [code, code] } });
+      list.push({ code: code, name: (WNAME[code] && WNAME[code][isEn() ? 1 : 0]) || w.name || code, time: w.issueTime || w.updateTime, st: W[code] || W[k] || { bg: '#55606e', fg: '#fff', l: [code, code] } });
     });
     list.sort(function (a, b) { return (b.st.sev || 0) - (a.st.sev || 0); });
     if (!list.length) { $('warn').innerHTML = '<div class="nowarn">' + esc(t('noWarn')) + '</div>'; return; }
@@ -288,7 +300,9 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
       var label = s.b ? s.b + (s.s ? '<small style="font-size:.5em;margin-left:.3em">' + esc(s.s[i]) + '</small>' : '') : esc(s.l[i]);
       var time = w.time ? hhmm(new Date(w.time)) + ' ' + t('issued') : '';
       return '<div class="wb' + ((s.sev || 0) >= 3 ? ' sev' : '') + '">' +
-        '<div class="badge' + (s.tc ? ' tc' : '') + '" style="background:' + s.bg + ';color:' + s.fg + ';border-color:' + (s.bd || s.bg) + '">' + label + '</div>' +
+        (WFILE[w.code]
+          ? '<div class="badge wimg" data-cls="badge' + (s.tc ? ' tc' : '') + '" data-css="' + esc('background:' + s.bg + ';color:' + s.fg + ';border-color:' + (s.bd || s.bg)) + '" data-lbl="' + esc(label) + '"><img src="' + WICON + WFILE[w.code] + '.gif" alt="" onerror="__wIconErr(this)"></div>'
+          : '<div class="badge' + (s.tc ? ' tc' : '') + '" style="background:' + s.bg + ';color:' + s.fg + ';border-color:' + (s.bd || s.bg) + '">' + label + '</div>') +
         '<div><div class="wname">' + esc(w.name) + '</div><div class="wtime">' + esc(time) + '</div></div></div>';
     }).join('');
   }
@@ -385,9 +399,9 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
     }
     var now = Date.now(), h = '';
     cfg.stops.forEach(function (s) {
-      h += '<div class="stopname">' + esc(s.label || (isEn() ? s.en : s.tc)) + '</div>';
+      var head = '<div class="stopname"><span>' + esc(s.label || (isEn() ? s.en : s.tc)) + '</span>', thens = [], body = '';
       var rows = data.bus[s.id];
-      if (!rows) { h += '<div class="none">' + esc(t('loading')) + '</div>'; return; }
+      if (!rows) { h += head + '</div><div class="none">' + esc(t('loading')) + '</div>'; return; }
       var g = {}, order = [];
       rows.forEach(function (e) {
         var k = e.route + '_' + e.dir + '_' + e.service_type;
@@ -395,7 +409,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
         if (!g[k]) { g[k] = { route: e.route, dest: isEn() ? e.dest_en : e.dest_tc, list: [], rmk: '' }; order.push(g[k]); }
         g[k].list.push(e);
       });
-      if (!order.length) { h += '<div class="none">' + esc(t('noEta')) + '</div>'; return; }
+      if (!order.length) { h += head + '</div><div class="none">' + esc(t('noEta')) + '</div>'; return; }
       order.sort(routeCmp);
       order.forEach(function (r) {
         r.list.sort(function (a, b) { return a.eta_seq - b.eta_seq; });
@@ -413,14 +427,20 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-sy
           var x0 = etas[0], cls0 = 'eta' + (x0.sch ? ' sch' : '');
           cells = x0.m <= 0 ? '<div class="' + cls0 + ' arr">' + esc(t('arriving')) + '</div>'
             : '<div class="' + cls0 + '">' + x0.m + '<small>' + esc(t('min')) + '</small></div>';
-          var rest = etas.slice(1).map(function (x) { return x.m <= 0 ? t('arriving') : String(x.m); });
-          if (rest.length) cells += '<div class="more"><small>' + esc(t('then')) + '</small>' + esc(rest.join(' · ')) + ' ' + esc(t('min')) + '</div>';
+          if (etas[1]) thens.push({ route: r.route, m: etas[1].m });
         } else cells = '<div class="none">' + esc(rmk || t('noEta')) + '</div>';
         var sub = etas.length && etas[0].sch ? t('sched') : (etas.length ? '' : '');
-        h += '<div class="row"><div class="rt' + (r.route.length >= 4 ? ' long' : r.route.length === 3 ? ' mid' : '') + '"><span>' + esc(r.route) + '</span></div>' +
+        body += '<div class="row"><div class="rt' + (r.route.length >= 4 ? ' long' : r.route.length === 3 ? ' mid' : '') + '"><span>' + esc(r.route) + '</span></div>' +
           '<div class="dest">' + esc(t('to')) + ' ' + esc(r.dest) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>' +
           '<div class="etas">' + cells + '</div></div>';
       });
+      if (thens.length) {
+        var one = order.length === 1;
+        head += '<span class="then">' + thens.map(function (x) {
+          return (one ? '' : esc(x.route) + ' ') + esc(t('then')) + ' <b>' + (x.m <= 0 ? esc(t('arriving')) : x.m) + '</b> ' + (x.m <= 0 ? '' : esc(t('min')));
+        }).join(' · ') + '</span>';
+      }
+      h += head + '</div>' + body;
     });
     box.innerHTML = h;
     // size the route column to the widest route number shown, so it never runs into the destination
